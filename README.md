@@ -1,5 +1,5 @@
 # Sample Employee Contact info App Using Next.Js / Postgres SQL and  Node.JS(express) on Coherence
-## This is a starter template for building a React app NExt.JS and Tailwind CSS on Coherence.
+## This is a starter template for building a React app Next.JS and Tailwind CSS on Coherence.
 
 ## How to use
 - Sign up for an account at app.withcoherence.com
