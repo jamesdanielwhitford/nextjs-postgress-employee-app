@@ -15,8 +15,8 @@ exports.up = async (pgm) => {
 
     if (!databaseExists.rows.length) {
       // Create the database if it doesn't exist
-      await pgm.db.query(`CREATE DATABASE ${process.env.PGDATABASE}`);
-      console.log(`Database ${process.env.PGDATABASE} created successfully.`);
+      await pgm.db.query(`CREATE DATABASE ${process.env.PG_DATABASE_NAME}`);
+      console.log(`Database ${process.env.PG_DATABASE_NAME} created successfully.`);
     }
 
     // Create the employees table
