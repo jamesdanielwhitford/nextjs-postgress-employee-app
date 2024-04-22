@@ -27,7 +27,7 @@ frontend:
   repo_path: .
   install: ["npm", "install"]
   build: ["npm", "run", "build"]
-   dev:
+  dev:
     - npm
     - run
     - dev
