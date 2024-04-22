@@ -30,7 +30,6 @@ frontend:
   dev: ["npm", "run", "dev"]
   
   prod: ["npm", "run", "dev"]
-  
-  assets_path:  ./.next
+  assets_path: ./.next
   local_packages:
     - node_modules 
