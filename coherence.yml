@@ -31,10 +31,7 @@ frontend:
     - npm
     - run
     - dev
-  prod:
-    - npm
-    - run
-    - start
+
   assets_path: ./.next
   local_packages:
     - node_modules 
