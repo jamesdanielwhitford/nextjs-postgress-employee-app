@@ -1,3 +1,4 @@
+require('dotenv').config(); // at the top of your main file
 /**
  * @type {import('node-pg-migrate').ColumnDefinitions | undefined}
  */
@@ -15,8 +16,9 @@ exports.up = async (pgm) => {
 
     if (!databaseExists.rows.length) {
       // Create the database if it doesn't exist
-      await pgm.db.query(`CREATE DATABASE ${process.env.PG_DATABASE_NAME}`);
-      console.log(`Database ${process.env.PG_DATABASE_NAME} created successfully.`);
+      const databaseName = process.env.PG_DATABASE_NAME
+      await pgm.db.query(`CREATE DATABASE ${databaseName}`);
+      console.log(`Database ${databaseName} created successfully.`);
     }
 
     // Create the employees table
@@ -36,6 +38,25 @@ exports.up = async (pgm) => {
  * @param run {() => void | undefined}
  * @returns {Promise<void> | void}
  */
-exports.down = (pgm) => {
-  pgm.dropTable('employees');
+exports.down = async (pgm) => {
+  try {
+    // Create a default empty database
+    await pgm.db.query('CREATE DATABASE defaultdb');
+    console.log('Default empty database created successfully.');
+
+    // Get the database name from the PG_DATABASE_URL
+    const databaseName = process.env.PG_DATABASE_NAME
+
+    // Switch to the database to be dropped
+    await pgm.db.query(`USE ${databaseName}`);
+
+    // Drop the employees table
+    pgm.dropTable('employees');
+
+    // Drop the database
+    await pgm.db.query(`DROP DATABASE ${databaseName}`);
+    console.log(`Database ${databaseName} dropped successfully.`);
+  } catch (error) {
+    console.error('Error dropping database or creating default database:', error);
+  }
 };
