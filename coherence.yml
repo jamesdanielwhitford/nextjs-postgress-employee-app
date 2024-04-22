@@ -31,4 +31,4 @@ frontend:
   assets_path: ./build
   local_packages:
     - node_modules
-  index_file_name: index.html
+  index_file_name: ./pages/index.js
