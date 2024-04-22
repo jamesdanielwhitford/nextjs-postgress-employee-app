@@ -27,9 +27,14 @@ frontend:
   repo_path: .
   install: ["npm", "install"]
   build: ["npm", "run", "build"]
-  dev: ["npm", "run", "dev"]
-  
-  prod: ["npm", "run", "dev"]
+   dev:
+    - npm
+    - run
+    - dev
+  prod:
+    - npm
+    - run
+    - start
   assets_path: ./.next
   local_packages:
     - node_modules 
