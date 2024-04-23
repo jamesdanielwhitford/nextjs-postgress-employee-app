@@ -1,10 +1,10 @@
 const { Pool } = require('pg');
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: process.env.PG_DATABASE_URL,
   
 });
-console.error('Using database:', process.env.DATABASE_URL);
+console.error('Using database:', process.env.PG_DATABASE_URL);
 
 pool.query('SELECT NOW()', (err, res) => {
   if (err) {
