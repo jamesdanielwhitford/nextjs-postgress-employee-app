@@ -22,7 +22,6 @@ backend:
     - node_modules
 frontend:
   type: frontend
-  index_file_name: ./index.html
   url_path: /
   repo_path: .
   assets_path: ./.next
