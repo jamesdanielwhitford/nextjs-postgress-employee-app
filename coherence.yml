@@ -7,12 +7,18 @@ backend:
     - npm
     - run
     - start
-  
-  migration:  ["npm", "run","migrate","up"]
-  seed: ["npm", "run","migrate","up"]
-
+  seed:
+    - npm
+    - run
+    - migrate
+    - up
   type: backend
   url_path: /api
+  migration:
+    - npm
+    - run
+    - migrate
+    - up
   resources:
     - name: db1
       type: database
@@ -21,15 +27,40 @@ backend:
   local_packages:
     - node_modules
 frontend:
-  type: backend
-  url_path: /
-  repo_path: .
-  
-  local_packages: ["node_modules"]
-  install: ["npm", "install"]
-  build: ["npm", "run", "build"]
-  dev: ["npm", "run", "dev"]
+  dev: 
+    - npm
+    - run
+    - dev
+    
   prod:
-     - npm
-     - run
-     - start
+    - npm
+    - run
+    - start
+  seed:
+    - npm
+    - run
+    - migrate
+    - up
+  type: backend
+  build:
+    - npm
+    - run
+    - build
+    - &
+    - npm
+    - run
+    - migrate
+    - up
+
+  install:
+    - npm
+    - install
+  url_path: /
+  migration:
+    - npm
+    - run
+    - migrate
+    - up
+  repo_path: .
+  local_packages:
+    - node_modules
