@@ -27,11 +27,10 @@ backend:
   local_packages:
     - node_modules
 frontend:
-  dev: 
+  dev:
     - npm
     - run
     - dev
-    
   prod:
     - npm
     - run
@@ -46,12 +45,11 @@ frontend:
     - npm
     - run
     - build
-    - &
+    - and
     - npm
     - run
     - migrate
     - up
-
   install:
     - npm
     - install

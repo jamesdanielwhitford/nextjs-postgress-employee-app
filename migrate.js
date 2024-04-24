@@ -1,11 +1,11 @@
 
 require('dotenv').config(); // at the top of your main file
 
-console.log(process.env.PG_DATABASE_URL); 
+console.log(process.env.DATABASE_URL); 
 
 const migrate = require('node-pg-migrate').default;
 const { Pool } = require('pg');
-const databaseUrl = process.env.PG_DATABASE_URL;
+const databaseUrl = process.env.DATABASE_URL;
 
 const pool = new Pool({ connectionString: databaseUrl });
 

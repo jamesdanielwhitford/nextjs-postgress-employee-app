@@ -16,7 +16,7 @@ exports.up = async (pgm) => {
 
     if (!databaseExists.rows.length) {
       // Create the database if it doesn't exist
-      const databaseName = process.env.PG_DATABASE_NAME
+      const databaseName = process.env.DATABASE_NAME
       await pgm.db.query(`CREATE DATABASE ${databaseName}`);
       console.log(`Database ${databaseName} created successfully.`);
     }
@@ -44,8 +44,8 @@ exports.down = async (pgm) => {
     await pgm.db.query('CREATE DATABASE defaultdb');
     console.log('Default empty database created successfully.');
 
-    // Get the database name from the PG_DATABASE_URL
-    const databaseName = process.env.PG_DATABASE_NAME
+    // Get the database name from the DATABASE_URL
+    const databaseName = process.env.DATABASE_NAME
 
     // Switch to the database to be dropped
     await pgm.db.query(`USE ${databaseName}`);
