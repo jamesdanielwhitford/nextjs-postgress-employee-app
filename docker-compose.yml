@@ -11,7 +11,7 @@ services:
     environment:
       - DATABASE_URL=postgres://postgres:password@db:5432/employees
     command: >
-      sh -c "npm run migrate up && npm run build && npm start"
+      sh -c "npm install wait-on && npx wait-on tcp:db:5432 && npm run migrate up && npm run build && npm start"
   db:
     image: postgres:14
     environment:

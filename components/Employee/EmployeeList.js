@@ -26,10 +26,10 @@ const EmployeeList = ({ employees, handleDeleteEmployee }) => {
               <td className="px-4 py-2">{employee.phone}</td>
               <td className="px-4 py-2">
                 <div className="flex items-center justify-center space-x-2">
-                  <Link href={`/employees/${employee.id}`} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                  <Link href="" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     View
                   </Link>
-                  <Link href={`/employees/${employee.id}/edit`} className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">
+                  <Link href="" className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">
                     Edit
                   </Link>
                   <button

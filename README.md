@@ -1,11 +1,19 @@
-# Employee Contact info full stack app with Next.js and Postgres on the Coherence platform
-## Learn how to Create a full stack app with Next.js and Postgres on the Coherence platform.
+# Employee contact info app with Next.js and Postgres on the Coherence platform
 
-## How to use
-- Sign up for an account at app.withcoherence.com
-- Once you have created an account, create a new application.
-- On the "App details" page, inside step #2 "Import a repo," click on the "Import feature" link to import a repo into your
-- Copy and paste this repo's URL https://github.com/coherencedemo/nextjs-postgress-employee-app.git into the "Girhub Repository" field.
+Learn how to build a full stack app with Next.js and Postgres on the Coherence platform.
 
-Now Follow instruction in tutorial / on screen on Coherence app
-Coherence will set up your Cloud IDE, automatic preview environments, CI/CD pipelines, and managed cloud infrastructure.
+## Getting Started 
+
+Fork the repository to your GitHub account. To test locally clone the forked repository to your machine. You will need to have Docker installed.
+
+```shell
+git clone https://github.com/<your_github_username>/nextjs-postgress-employee-app.git
+cd nextjs-postgress-employee-app
+docker-compose up 
+```
+
+After a successful build the application will be accessible at http://localhost:3000.
+
+## How to deploy on the Coherence platform
+
+Detailed instructions are provided in the guide at: https://docs.withcoherence.com/docs/getting-started/create-nextjs-postgres-full-stack-app
