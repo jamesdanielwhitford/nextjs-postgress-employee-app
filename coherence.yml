@@ -7,11 +7,6 @@ backend:
     - npm
     - run
     - start
-  seed:
-    - npm
-    - run
-    - migrate
-    - up
   type: backend
   url_path: /api
   migration:
@@ -35,30 +30,15 @@ frontend:
     - npm
     - run
     - start
-  seed:
-    - npm
-    - run
-    - migrate
-    - up
   type: backend
   build:
     - npm
     - run
     - build
-    - and
-    - npm
-    - run
-    - migrate
-    - up
   install:
     - npm
     - install
   url_path: /
-  migration:
-    - npm
-    - run
-    - migrate
-    - up
   repo_path: .
   local_packages:
     - node_modules
