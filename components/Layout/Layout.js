@@ -2,14 +2,17 @@ import Head from 'next/head';
 
 const Layout = ({ children }) => {
   return (
-    <div>
+    <>
       <Head>
-        <title>Employee Management</title>
+        <title>Employee Management App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <main>{children}</main>
-    </div>
+      <div className="min-h-screen bg-background flex justify-center items-center py-8 px-4">
+        <div className="wrapper">
+          {children}
+        </div>
+      </div>
+    </>
   );
 };
 

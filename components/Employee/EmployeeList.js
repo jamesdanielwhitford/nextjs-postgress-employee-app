@@ -1,44 +1,37 @@
 import Link from 'next/link';
 
 const EmployeeList = ({ employees, handleDeleteEmployee }) => {
-  // Check if employees is not defined or not an array
-  if (!employees || !Array.isArray(employees)) {
-    return <div>...</div>;
+  if (!employees || employees.length === 0) {
+    return <p className="text-center text-gray-500">No employees found</p>;
   }
 
   return (
-    <div className="max-w-3xl mx-auto">
-      <h2 className="text-2xl font-bold mb-4">Employee List</h2>
-      <table className="w-full border border-gray-300">
+    <div className="table-wrapper">
+      <table>
         <thead>
           <tr>
-            <th className="px-4 py-2">Name</th>
-            <th className="px-4 py-2">Email</th>
-            <th className="px-4 py-2">Phone</th>
-            <th className="px-4 py-2">Actions</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {employees.map((employee) => (
-            <tr key={employee.id} className="border-b border-gray-300">
-              <td className="px-4 py-2">{employee.name}</td>
-              <td className="px-4 py-2">{employee.email}</td>
-              <td className="px-4 py-2">{employee.phone}</td>
-              <td className="px-4 py-2">
-                <div className="flex items-center justify-center space-x-2">
-                  <Link href="" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    View
-                  </Link>
-                  <Link href="" className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">
-                    Edit
-                  </Link>
-                  <button
-                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                    onClick={() => handleDeleteEmployee(employee.id)}
-                  >
-                    Delete
-                  </button>
-                </div>
+            <tr key={employee.id}>
+              <td>{employee.name}</td>
+              <td>{employee.email}</td>
+              <td>{employee.phone}</td>
+              <td className="actions">
+                <Link href={`/employees/${employee.id}`}>
+                  <a className="action-btn edit-btn">Edit</a>
+                </Link>
+                <button
+                  className="action-btn delete-btn"
+                  onClick={() => handleDeleteEmployee(employee.id)}
+                >
+                  Delete
+                </button>
               </td>
             </tr>
           ))}

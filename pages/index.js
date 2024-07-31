@@ -9,11 +9,8 @@ const Home = () => {
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-       
         const response = await fetch('/api/employees');
-        
         const data = await response.json();
-    
         setEmployees(data);
         setIsLoading(false);
       } catch (error) {
@@ -25,7 +22,6 @@ const Home = () => {
     fetchEmployees();
   }, []);
 
-  
   const handleCreateEmployee = async (employee) => {
     try {
       const response = await fetch('/api/employees', {
@@ -46,9 +42,6 @@ const Home = () => {
       console.error('Error:', error);
     }
   };
-  
-  
-  
 
   const handleDeleteEmployee = async (id) => {
     try {
@@ -66,18 +59,23 @@ const Home = () => {
   };
 
   return (
-    <div className="container mx-auto py-8">
-      <h1 className="text-3xl font-bold mb-4">Employee Management</h1>
-      <EmployeeForm onSubmit={handleCreateEmployee} />
-      {isLoading ? (
-        <p>Loading employees...</p>
-      ) : (
-        <EmployeeList
-          employees={employees}
-          handleDeleteEmployee={handleDeleteEmployee}
-        />
-      )}
-    </div>
+    <>
+      <div className="container">
+        <h1>Add Employee</h1>
+        <EmployeeForm onSubmit={handleCreateEmployee} />
+      </div>
+      <div className="container">
+        <h2>Employee List</h2>
+        {isLoading ? (
+          <p className="text-center">Loading employees...</p>
+        ) : (
+          <EmployeeList
+            employees={employees}
+            handleDeleteEmployee={handleDeleteEmployee}
+          />
+        )}
+      </div>
+    </>
   );
 };
 
