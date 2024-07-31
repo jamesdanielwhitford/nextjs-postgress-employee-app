@@ -24,10 +24,10 @@ const EmployeeList = ({ employees, handleDeleteEmployee }) => {
               <td>{employee.phone}</td>
               <td className="actions">
                 <Link href={`/employees/${employee.id}`}>
-                  <a className="action-btn edit-btn">Edit</a>
+                  <a className="edit-btn">Edit</a>
                 </Link>
                 <button
-                  className="action-btn delete-btn"
+                  className="delete-btn delete"
                   onClick={() => handleDeleteEmployee(employee.id)}
                 >
                   Delete
