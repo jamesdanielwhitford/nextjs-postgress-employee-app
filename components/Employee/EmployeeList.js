@@ -22,16 +22,18 @@ const EmployeeList = ({ employees, handleDeleteEmployee }) => {
               <td>{employee.name}</td>
               <td>{employee.email}</td>
               <td>{employee.phone}</td>
-              <td className="actions">
-                <Link href={`/employees/${employee.id}`}>
-                  <a className="edit-btn">Edit</a>
-                </Link>
-                <button
-                  className="delete-btn delete"
-                  onClick={() => handleDeleteEmployee(employee.id)}
-                >
-                  Delete
-                </button>
+              <td>
+                <div className="actions">
+                  <Link href={`/employees/${employee.id}`}>
+                    <a className="edit-btn">Edit</a>
+                  </Link>
+                  <button
+                    className="delete-btn"
+                    onClick={() => handleDeleteEmployee(employee.id)}
+                  >
+                    Delete
+                  </button>
+                </div>
               </td>
             </tr>
           ))}

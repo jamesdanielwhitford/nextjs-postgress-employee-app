@@ -59,7 +59,7 @@ const Home = () => {
   };
 
   return (
-    <>
+    <div className="wrapper">
       <div className="container">
         <h1>Add Employee</h1>
         <EmployeeForm onSubmit={handleCreateEmployee} />
@@ -67,7 +67,7 @@ const Home = () => {
       <div className="container">
         <h2>Employee List</h2>
         {isLoading ? (
-          <p className="text-center">Loading employees...</p>
+          <p className="text-center text-gray-500">Loading employees...</p>
         ) : (
           <EmployeeList
             employees={employees}
@@ -75,7 +75,7 @@ const Home = () => {
           />
         )}
       </div>
-    </>
+    </div>
   );
 };
 

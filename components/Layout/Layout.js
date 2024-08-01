@@ -7,7 +7,7 @@ const Layout = ({ children }) => {
         <title>Employee Management App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="min-h-screen bg-background flex justify-center items-center py-8 px-4">
+      <div className="bg-background min-h-screen flex justify-center items-center py-8 px-4">
         <div className="wrapper">
           {children}
         </div>

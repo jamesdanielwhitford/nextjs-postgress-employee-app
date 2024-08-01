@@ -23,48 +23,45 @@ const EmployeeForm = ({ employee, onSubmit, isEditing }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="form">
-      <div className="form-group">
-        <label htmlFor="name" className="form-label">Name</label>
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label htmlFor="name">Name</label>
         <input
           type="text"
           id="name"
           name="name"
           value={formData.name}
           onChange={handleChange}
-          className="form-input"
           required
         />
       </div>
-      <div className="form-group">
-        <label htmlFor="email" className="form-label">Email</label>
+      <div>
+        <label htmlFor="email">Email</label>
         <input
           type="email"
           id="email"
           name="email"
           value={formData.email}
           onChange={handleChange}
-          className="form-input"
           required
         />
       </div>
-      <div className="form-group">
-        <label htmlFor="phone" className="form-label">Phone</label>
+      <div>
+        <label htmlFor="phone">Phone</label>
         <input
           type="tel"
           id="phone"
           name="phone"
           value={formData.phone}
           onChange={handleChange}
-          className="form-input"
           required
         />
       </div>
-      <button type="submit" className="btn">
+      <button type="submit">
         {isEditing ? 'Update Employee' : 'Add Employee'}
       </button>
       {isEditing && (
-        <a href="/" onClick={(e) => { e.preventDefault(); router.push('/'); }} className="mt-4 block text-center text-blue-600 hover:text-blue-800">
+        <a href="/" onClick={(e) => { e.preventDefault(); router.push('/'); }}>
           Cancel
         </a>
       )}
