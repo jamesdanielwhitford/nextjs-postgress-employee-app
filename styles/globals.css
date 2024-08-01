@@ -158,18 +158,35 @@ th {
   
   .container {
     flex: 1;
-    width: calc(50% - 10px); /* Subtracting half of the gap */
-    max-width: none;
   }
 
   .container:first-child {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
+    /* Add Employee form */
+    flex: 0 0 calc(40% - 10px); /* 40% width minus half of the gap */
+    max-width: calc(40% - 10px);
   }
 
   .container:last-child {
-    flex: 1;
+    /* Employee List */
+    flex: 0 0 calc(60% - 10px); /* 60% width minus half of the gap */
+    max-width: calc(60% - 10px);
+  }
+
+  .table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+  }
+}
+
+/* Add a media query for very large screens */
+@media (min-width: 1200px) {
+  .container:first-child {
+    flex: 0 0 calc(40% - 10px); /* 35% width minus half of the gap */
+    max-width: calc(40% - 10px);
+  }
+
+  .container:last-child {
+    flex: 0 0 calc(60% - 10px); /* 65% width minus half of the gap */
+    max-width: calc(60% - 10px);
   }
 }
