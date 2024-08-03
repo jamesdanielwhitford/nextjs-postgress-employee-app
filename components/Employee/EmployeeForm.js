@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
-const EmployeeForm = ({ employee, onSubmit, isEditing }) => {
-  const [formData, setFormData] = useState(employee || {
+const EmployeeForm = ({ employee, onSubmit }) => {
+  const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
@@ -10,15 +10,44 @@ const EmployeeForm = ({ employee, onSubmit, isEditing }) => {
 
   const router = useRouter();
 
+  useEffect(() => {
+    if (employee) {
+      setFormData(employee);
+    }
+  }, [employee]);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSubmit(formData);
-    if (!isEditing) {
-      setFormData({ name: '', email: '', phone: '' });
+    
+    try {
+      if (employee) {
+        // Edit existing employee
+        const response = await fetch(`/api/employees/${employee.id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+
+        if (response.ok) {
+          const updatedEmployee = await response.json();
+          onSubmit(updatedEmployee);
+          router.push('/');
+        } else {
+          console.error('Error updating employee:', await response.text());
+        }
+      } else {
+        // Create new employee
+        onSubmit(formData);
+        setFormData({ name: '', email: '', phone: '' });
+      }
+    } catch (error) {
+      console.error('Error:', error);
     }
   };
 
@@ -58,12 +87,12 @@ const EmployeeForm = ({ employee, onSubmit, isEditing }) => {
         />
       </div>
       <button type="submit">
-        {isEditing ? 'Update Employee' : 'Add Employee'}
+        {employee ? 'Update Employee' : 'Add Employee'}
       </button>
-      {isEditing && (
-        <a href="/" onClick={(e) => { e.preventDefault(); router.push('/'); }}>
+      {employee && (
+        <button type="button" onClick={() => router.push('/')}>
           Cancel
-        </a>
+        </button>
       )}
     </form>
   );

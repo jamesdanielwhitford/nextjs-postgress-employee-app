@@ -9,7 +9,6 @@ const createEmployee = async (employee) => {
 };
 
 const getAllEmployees = async () => {
-  
   const query = 'SELECT * FROM employees';
   const result = await pool.query(query);
   return result.rows;

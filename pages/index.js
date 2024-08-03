@@ -5,6 +5,7 @@ import EmployeeForm from '../components/Employee/EmployeeForm';
 const Home = () => {
   const [employees, setEmployees] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [editingEmployee, setEditingEmployee] = useState(null);
 
   useEffect(() => {
     const fetchEmployees = async () => {
@@ -22,25 +23,49 @@ const Home = () => {
     fetchEmployees();
   }, []);
 
-  const handleCreateEmployee = async (employee) => {
+  const handleSubmit = async (employee) => {
     try {
-      const response = await fetch('/api/employees', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(employee),
-      });
-      
-      if (response.ok) {
-        const data = await response.json();
-        setEmployees([...employees, data]);
+      if (editingEmployee) {
+        // Update existing employee
+        const response = await fetch(`/api/employees/${editingEmployee.id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(employee),
+        });
+        
+        if (response.ok) {
+          const updatedEmployee = await response.json();
+          setEmployees(employees.map(emp => emp.id === updatedEmployee.id ? updatedEmployee : emp));
+          setEditingEmployee(null);
+        } else {
+          console.error('Error updating employee:', await response.text());
+        }
       } else {
-        console.error('Error creating employee:', await response.text());
+        // Create new employee
+        const response = await fetch('/api/employees', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(employee),
+        });
+        
+        if (response.ok) {
+          const newEmployee = await response.json();
+          setEmployees([...employees, newEmployee]);
+        } else {
+          console.error('Error creating employee:', await response.text());
+        }
       }
     } catch (error) {
       console.error('Error:', error);
     }
+  };
+
+  const handleEditEmployee = (employee) => {
+    setEditingEmployee(employee);
   };
 
   const handleDeleteEmployee = async (id) => {
@@ -61,8 +86,11 @@ const Home = () => {
   return (
     <div className="wrapper">
       <div className="container">
-        <h1>Add Employee</h1>
-        <EmployeeForm onSubmit={handleCreateEmployee} />
+        <h1>{editingEmployee ? 'Edit Employee' : 'Add Employee'}</h1>
+        <EmployeeForm 
+          employee={editingEmployee} 
+          onSubmit={handleSubmit} 
+        />
       </div>
       <div className="container">
         <h2>Employee List</h2>
@@ -71,6 +99,7 @@ const Home = () => {
         ) : (
           <EmployeeList
             employees={employees}
+            handleEditEmployee={handleEditEmployee}
             handleDeleteEmployee={handleDeleteEmployee}
           />
         )}

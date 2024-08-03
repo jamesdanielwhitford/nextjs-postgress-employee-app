@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-const EmployeeList = ({ employees, handleDeleteEmployee }) => {
+const EmployeeList = ({ employees, handleDeleteEmployee, handleEditEmployee }) => {
   if (!employees || employees.length === 0) {
     return <p className="text-center text-gray-500">No employees found</p>;
   }
@@ -24,9 +24,12 @@ const EmployeeList = ({ employees, handleDeleteEmployee }) => {
               <td>{employee.phone}</td>
               <td>
                 <div className="actions">
-                  <Link href={`/employees/${employee.id}`}>
-                    <a className="edit-btn">Edit</a>
-                  </Link>
+                  <button
+                    className="edit-btn"
+                    onClick={() => handleEditEmployee(employee)}
+                  >
+                    Edit
+                  </button>
                   <button
                     className="delete-btn"
                     onClick={() => handleDeleteEmployee(employee.id)}
