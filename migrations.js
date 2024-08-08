@@ -1,5 +1,5 @@
-import { sql } from '@vercel/postgres';
-import { Kysely, PostgresDialect } from 'kysely';
+const { sql } = require('@vercel/postgres');
+const { Kysely, PostgresDialect } = require('kysely');
 
 const db = new Kysely({
   dialect: new PostgresDialect({
