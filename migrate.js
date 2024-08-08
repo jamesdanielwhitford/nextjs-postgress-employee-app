@@ -9,7 +9,6 @@ const pool = new Pool({ connectionString: databaseUrl });
 
 const migrateOptions = {
   dbClient: pool,
-  migrationsTable: 'pgmigrations',
   dir: 'migrations',
   direction: 'up',
   count: Infinity,
