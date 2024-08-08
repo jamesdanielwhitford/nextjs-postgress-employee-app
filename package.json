@@ -5,9 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && node migrate.js",
     "start": "next start",
-    "migrate1": "node migrate.js",
     "migrate": "node-pg-migrate"
   },
   "keywords": [],
