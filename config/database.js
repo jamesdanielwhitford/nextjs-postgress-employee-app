@@ -1,18 +1,31 @@
-const { Pool } = require('pg');
+// config/database.js
+const { Pool } = require('@vercel/postgres');
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  
-});
-console.error('Using database:', process.env.DATABASE_URL);
+let pool;
 
-pool.query('SELECT NOW()', (err, res) => {
-  if (err) {
-    console.error('Error connecting to database:', err);
-  } else {
+if (!pool) {
+  pool = new Pool({
+    connectionString: process.env.POSTGRES_URL,
+    ssl: {
+      rejectUnauthorized: false
+    }
+  });
+}
+
+async function connectToDatabase() {
+  try {
+    const client = await pool.connect();
+    const result = await client.query('SELECT NOW()');
     console.log('Connected to database successfully');
-    console.log('Current timestamp:', res.rows[0].now);
+    console.log('Current timestamp:', result.rows[0].now);
+    client.release();
+  } catch (err) {
+    console.error('Error connecting to database:', err);
   }
-});
+}
 
-module.exports = pool;
+connectToDatabase();
+
+module.exports = {
+  query: (text, params) => pool.query(text, params),
+};
