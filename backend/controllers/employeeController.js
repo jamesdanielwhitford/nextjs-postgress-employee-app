@@ -1,15 +1,8 @@
-const pool = require('../config/database');
+const employeeModel = require('../models/employeeModel');
 
 const createEmployee = async (req, res) => {
   try {
-    const { name, position, department } = req.body;
-    const query = 'INSERT INTO employees (name, position, department) VALUES ($1, $2, $3) RETURNING *';
-    const values = [name, position, department];
-    const result = await pool.query(query, values);
-    const employee = result.rows[0];
-    if (!employee) {
-      throw new Error('Failed to create employee');
-    }
+    const employee = await employeeModel.createEmployee(req.body);
     res.status(201).json(employee);
   } catch (error) {
     res.status(500).json({ error: error.message || 'Internal server error' });
@@ -18,9 +11,7 @@ const createEmployee = async (req, res) => {
 
 const getAllEmployees = async (req, res) => {
   try {
-    const query = 'SELECT * FROM employees';
-    const result = await pool.query(query);
-    const employees = result.rows;
+    const employees = await employeeModel.getAllEmployees();
     res.status(200).json(employees);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -29,9 +20,7 @@ const getAllEmployees = async (req, res) => {
 
 const getEmployeeById = async (req, res) => {
   try {
-    const query = 'SELECT * FROM employees WHERE id = $1';
-    const result = await pool.query(query, [req.params.id]);
-    const employee = result.rows[0];
+    const employee = await employeeModel.getEmployeeById(req.params.id);
     if (!employee) {
       return res.status(404).json({ error: 'Employee not found' });
     }
@@ -43,11 +32,7 @@ const getEmployeeById = async (req, res) => {
 
 const updateEmployee = async (req, res) => {
   try {
-    const { name, position, department } = req.body;
-    const query = 'UPDATE employees SET name = $1, position = $2, department = $3 WHERE id = $4 RETURNING *';
-    const values = [name, position, department, req.params.id];
-    const result = await pool.query(query, values);
-    const employee = result.rows[0];
+    const employee = await employeeModel.updateEmployee(req.params.id, req.body);
     if (!employee) {
       return res.status(404).json({ error: 'Employee not found' });
     }
@@ -59,9 +44,7 @@ const updateEmployee = async (req, res) => {
 
 const deleteEmployee = async (req, res) => {
   try {
-    const query = 'DELETE FROM employees WHERE id = $1 RETURNING *';
-    const result = await pool.query(query, [req.params.id]);
-    const employee = result.rows[0];
+    const employee = await employeeModel.deleteEmployee(req.params.id);
     if (!employee) {
       return res.status(404).json({ error: 'Employee not found' });
     }
