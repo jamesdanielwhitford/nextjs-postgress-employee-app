@@ -1,24 +1,15 @@
 const { sql } = require('@vercel/postgres');
-const { Kysely, PostgresDialect } = require('kysely');
-
-const db = new Kysely({
-  dialect: new PostgresDialect({
-    pool: {
-      connectionString: process.env.POSTGRES_URL,
-    },
-  }),
-});
 
 async function createEmployeesTable() {
   try {
-    await db.schema
-      .createTable('employees')
-      .addColumn('id', 'serial', (col) => col.primaryKey())
-      .addColumn('name', 'varchar(255)', (col) => col.notNull())
-      .addColumn('email', 'varchar(255)', (col) => col.notNull())
-      .addColumn('phone', 'varchar(20)', (col) => col.notNull())
-      .execute();
-
+    await sql`
+      CREATE TABLE IF NOT EXISTS employees (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        email VARCHAR(255) NOT NULL,
+        phone VARCHAR(20) NOT NULL
+      );
+    `;
     console.log('Employees table created successfully.');
   } catch (error) {
     console.error('Error creating employees table:', error);
@@ -32,8 +23,6 @@ async function runMigrations() {
     console.log('All migrations completed successfully.');
   } catch (error) {
     console.error('Error running migrations:', error);
-  } finally {
-    await db.destroy();
   }
 }
 
