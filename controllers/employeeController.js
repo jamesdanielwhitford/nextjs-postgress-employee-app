@@ -1,11 +1,8 @@
-const employeeModel = require('../models/employeeModel');
+import * as employeeModel from '../models/employeeModel';
 
-const createEmployee = async (req, res) => {
+export const createEmployee = async (req, res) => {
   try {
     const employee = await employeeModel.createEmployee(req.body);
-    if (!employee) {
-      throw new Error('Failed to create employee');
-    }
     res.status(201).json(employee);
   } catch (error) {
     console.error('Error creating employee:', error);
@@ -13,7 +10,7 @@ const createEmployee = async (req, res) => {
   }
 };
 
-const getAllEmployees = async (req, res) => {
+export const getAllEmployees = async (req, res) => {
   try {
     const employees = await employeeModel.getAllEmployees();
     res.status(200).json(employees);
@@ -23,7 +20,7 @@ const getAllEmployees = async (req, res) => {
   }
 };
 
-const getEmployeeById = async (req, res) => {
+export const getEmployeeById = async (req, res) => {
   const { id } = req.query;
   try {
     const employee = await employeeModel.getEmployeeById(id);
@@ -37,7 +34,7 @@ const getEmployeeById = async (req, res) => {
   }
 };
 
-const updateEmployee = async (req, res) => {
+export const updateEmployee = async (req, res) => {
   const { id } = req.query;
   try {
     const updatedEmployee = await employeeModel.updateEmployee(id, req.body);
@@ -51,7 +48,7 @@ const updateEmployee = async (req, res) => {
   }
 };
 
-const deleteEmployee = async (req, res) => {
+export const deleteEmployee = async (req, res) => {
   const { id } = req.query;
   try {
     const deletedEmployee = await employeeModel.deleteEmployee(id);
@@ -63,12 +60,4 @@ const deleteEmployee = async (req, res) => {
     console.error(`Error deleting employee with id ${id}:`, error);
     res.status(500).json({ error: error.message || 'Internal server error' });
   }
-};
-
-module.exports = {
-  createEmployee,
-  getAllEmployees,
-  getEmployeeById,
-  updateEmployee,
-  deleteEmployee,
 };

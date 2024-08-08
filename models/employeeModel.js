@@ -1,6 +1,6 @@
-import { sql } from '../config/database';
+import { sql } from '@vercel/postgres';
 
-const createEmployee = async (employee) => {
+export const createEmployee = async (employee) => {
   const { name, email, phone } = employee;
   const result = await sql`
     INSERT INTO employees (name, email, phone)
@@ -10,19 +10,19 @@ const createEmployee = async (employee) => {
   return result.rows[0];
 };
 
-const getAllEmployees = async () => {
+export const getAllEmployees = async () => {
   const result = await sql`SELECT * FROM employees`;
   return result.rows;
 };
 
-const getEmployeeById = async (id) => {
+export const getEmployeeById = async (id) => {
   const result = await sql`
     SELECT * FROM employees WHERE id = ${id}
   `;
   return result.rows[0];
 };
 
-const updateEmployee = async (id, employee) => {
+export const updateEmployee = async (id, employee) => {
   const { name, email, phone } = employee;
   const result = await sql`
     UPDATE employees
@@ -33,19 +33,11 @@ const updateEmployee = async (id, employee) => {
   return result.rows[0];
 };
 
-const deleteEmployee = async (id) => {
+export const deleteEmployee = async (id) => {
   const result = await sql`
     DELETE FROM employees
     WHERE id = ${id}
     RETURNING *
   `;
   return result.rows[0];
-};
-
-export {
-  createEmployee,
-  getAllEmployees,
-  getEmployeeById,
-  updateEmployee,
-  deleteEmployee,
 };
