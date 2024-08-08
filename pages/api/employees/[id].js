@@ -1,47 +1,17 @@
-import nc from 'next-connect';
-import {
-  getEmployeeById,
-  updateEmployee,
-  deleteEmployee,
-} from '../../../backend/controllers/employeeController';
-import { response } from 'express';
+import { getEmployeeById, updateEmployee, deleteEmployee } from '../../../controllers/employeeController';
 
-const handler = nc();
+export default async function handler(req, res) {
+  const { id } = req.query;
 
-handler.get(async (req, res) => {
-  try {
-    const employee = await getEmployeeById(req,res,req.query.id);
-    if (!employee) {
-      return res.status(404).json({ error: 'Employee not found' });
-    }
-    res.status(200).json(employee);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  switch (req.method) {
+    case 'GET':
+      return getEmployeeById(req, res, id);
+    case 'PUT':
+      return updateEmployee(req, res, id, req.body);
+    case 'DELETE':
+      return deleteEmployee(req, res, id);
+    default:
+      res.setHeader('Allow', ['GET', 'PUT', 'DELETE']);
+      res.status(405).end(`Method ${req.method} Not Allowed`);
   }
-});
-
-handler.put(async (req, res) => {
-  try {
-    const employee = await updateEmployee(req,res, req.query.id, req.body);
-    if (!employee) {
-      return res.status(404).json({ error: 'Employee not found' });
-    }
-    res.status(200).json(employee);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-handler.delete(async (req, res) => {
-  try {
-    const employee = await deleteEmployee(req,res,req.query.id);
-    if (!employee) {
-      return res.status(404).json({ error: 'Employee not found' });
-    }
-    res.status(200).json(employee);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-export default handler;
+}
