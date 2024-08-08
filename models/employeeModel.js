@@ -1,42 +1,48 @@
-const db = require('../config/database');
+import { sql } from '../config/database';
 
 const createEmployee = async (employee) => {
   const { name, email, phone } = employee;
-  const query = 'INSERT INTO employees (name, email, phone) VALUES ($1, $2, $3) RETURNING *';
-  const values = [name, email, phone];
-  const result = await db.query(query, values);
+  const result = await sql`
+    INSERT INTO employees (name, email, phone)
+    VALUES (${name}, ${email}, ${phone})
+    RETURNING *
+  `;
   return result.rows[0];
 };
 
 const getAllEmployees = async () => {
-  const query = 'SELECT * FROM employees';
-  const result = await db.query(query);
+  const result = await sql`SELECT * FROM employees`;
   return result.rows;
 };
 
 const getEmployeeById = async (id) => {
-  const query = 'SELECT * FROM employees WHERE id = $1';
-  const values = [id];
-  const result = await db.query(query, values);
+  const result = await sql`
+    SELECT * FROM employees WHERE id = ${id}
+  `;
   return result.rows[0];
 };
 
 const updateEmployee = async (id, employee) => {
   const { name, email, phone } = employee;
-  const query = 'UPDATE employees SET name = $1, email = $2, phone = $3 WHERE id = $4 RETURNING *';
-  const values = [name, email, phone, id];
-  const result = await db.query(query, values);
+  const result = await sql`
+    UPDATE employees
+    SET name = ${name}, email = ${email}, phone = ${phone}
+    WHERE id = ${id}
+    RETURNING *
+  `;
   return result.rows[0];
 };
 
 const deleteEmployee = async (id) => {
-  const query = 'DELETE FROM employees WHERE id = $1 RETURNING *';
-  const values = [id];
-  const result = await db.query(query, values);
+  const result = await sql`
+    DELETE FROM employees
+    WHERE id = ${id}
+    RETURNING *
+  `;
   return result.rows[0];
 };
 
-module.exports = {
+export {
   createEmployee,
   getAllEmployees,
   getEmployeeById,
